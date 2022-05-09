@@ -14,7 +14,7 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
             allowNull: false
         },
-        años_vida: {
+        anios_vida: {
             type: DataTypes.STRING
         }
     });
