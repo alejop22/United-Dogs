@@ -10,16 +10,18 @@ router.get('/',  async (req, res) => {
         try {
             const razas = await Raza.findAll({
                 where: {
-                    nombre: {
+                    name: {
                         [Op.like]: `%${name}%`
                     }
                 }
             });
 
             if (razas.length > 0) {
-                res.json(razas);
+                const metric = razas[0].weight;
+                razas[0].weight = {metric};
+                res.json(razas[0]);
             } else {
-                throw {error: `No se ha encontrado raza con nombre ${name}`};
+                throw {error: `No se encontró la raza ${name} en la base de datos`};
             }
 
         } catch (e) {

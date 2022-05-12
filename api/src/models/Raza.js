@@ -2,19 +2,20 @@ const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
     sequelize.define('raza', {
-        nombre: {
+        name: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            unique: true
+        },
+        height: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        altura: {
+        weight: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        peso: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        anios_vida: {
+        life_span: {
             type: DataTypes.STRING
         }
     });

@@ -13,12 +13,12 @@ router.use('/dogs', dogs);
 router.use('/temperament', temperamento);
 
 router.post('/dog', async (req, res) => {
-    const {nombre, altura, peso, anios_vida } = req.body;
+    const {name, height, weight, life_span } = req.body;
     try {
-        if (!nombre || !altura || !peso) {
+        if (!name || !height || !weight) {
             throw {error: 'Datos faltantes'};
         }
-        const nuevaRaza = await Raza.create({nombre, altura, peso, anios_vida});
+        const nuevaRaza = await Raza.create({name, height, weight, life_span});
         res.json(nuevaRaza);
     } catch (e) {
         res.status(400).send(e);
