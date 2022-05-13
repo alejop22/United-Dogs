@@ -13,12 +13,24 @@ router.use('/dogs', dogs);
 router.use('/temperament', temperamento);
 
 router.post('/dog', async (req, res) => {
-    const {name, height, weight, life_span } = req.body;
+    const { name, minHeight, maxHeight, minWeight, maxWeight, life_span, temperaments } = req.body;
+    const id = new Date().getTime();
+
     try {
-        if (!name || !height || !weight) {
+
+        if (!name || !minHeight || !maxHeight || !minWeight || !maxWeight) {
             throw {error: 'Datos faltantes'};
         }
-        const nuevaRaza = await Raza.create({name, height, weight, life_span});
+
+        const height = `${minHeight} - ${maxHeight}`;
+        const weight = `${minWeight} - ${maxWeight}`;   
+
+        const nuevaRaza = await Raza.create({id, name, height, weight, life_span});
+
+        for (const i of temperaments) {
+            await nuevaRaza.addTemperamento((i*1))
+        }
+
         res.json(nuevaRaza);
     } catch (e) {
         res.status(400).send(e);

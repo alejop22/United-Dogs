@@ -1,0 +1,37 @@
+.navbar {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    background-color: aqua;
+}
+
+.container_list ul {
+    margin: 0;
+    list-style: none;
+    display: flex;
+}
+
+.container_list li {
+    margin-right: 30px;
+}
+
+.container_list a {
+    text-decoration: none;
+}
+
+.container_input input {
+    padding: 7px;
+    font-weight: bold;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+}
+.container_input button {
+    padding: 7px;
+    font-weight: bold;
+    margin-left: 10px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+}

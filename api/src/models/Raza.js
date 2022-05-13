@@ -2,6 +2,10 @@ const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
     sequelize.define('raza', {
+        id: {
+            type: DataTypes.BIGINT,
+            primaryKey: true,
+        },
         name: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -18,5 +22,9 @@ module.exports = (sequelize) => {
         life_span: {
             type: DataTypes.STRING
         }
-    });
+    },
+        {
+            timestamps: false
+        }
+    );
 }

@@ -1,6 +1,6 @@
 const express = require('express');
 const { Op } = require('sequelize');
-const { Raza } = require('../db.js');
+const { Raza,Temperamento } = require('../db.js');
 
 const router = express.Router();
 
@@ -13,7 +13,12 @@ router.get('/',  async (req, res) => {
                     name: {
                         [Op.like]: `%${name}%`
                     }
-                }
+                },
+                include: [
+                    {
+                        model: Temperamento
+                    }
+                ]
             });
 
             if (razas.length > 0) {
@@ -29,7 +34,13 @@ router.get('/',  async (req, res) => {
         }
     } else {
         try {
-            const razas = await Raza.findAll();
+            const razas = await Raza.findAll({
+                include: [
+                    {
+                        model: Temperamento
+                    }
+                ]
+            });
 
             if (razas.length > 0) {
                 res.json(razas);
@@ -46,10 +57,27 @@ router.get('/:idRaza', async (req, res) => {
     const {idRaza} = req.params;
 
     try {
-        const raza = await Raza.findByPk(idRaza);
+        const raza = await Raza.findAll({
+            where: {
+                id: {
+                    [Op.eq]: idRaza
+                }
+            },
+            include: [
+                {
+                    model: Temperamento
+                }
+            ]
+        });
 
-        if (raza) {
-            res.json(raza);
+        const metric = raza[0].weight;
+        const imperial = raza[0].height;
+
+        raza[0].weight = {metric};
+        raza[0].height = {imperial};
+        
+        if (raza[0]) {
+            res.json(raza[0]);
         } else {
             throw {error: `No existe la raza con id ${idRaza}`};
         }

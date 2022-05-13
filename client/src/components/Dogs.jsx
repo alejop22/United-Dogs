@@ -1,31 +1,42 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import imgDog from '../assets/Dog4.jpg';
+import styles from '../components/dogs.module.css';
+
 export default function Dogs() {
 
     const dogs = useSelector(state => state.dogs);
-    const dispatch = useDispatch();
 
-    console.log(dogs);
-    
+    // if (dogs[0].temperamentos) {
+    //     for (const i of dogs[0].temperamentos) {
+    //         temps += `${i}, `;
+    //     }
+    // }
+
     return (
-        <section>
+        <section className={styles.container_cards}>
             {
             dogs.map((dog) => {
-                return  <div key={dog.id}>
-                            <h1>{dog.name}</h1>
-                            <Link to={`/Dog/Details/${dog.id}`}>    
+                return  <div key={dog.id} className={styles.card_dog}>
+                            <div>
+                                <Link to={`/Dog/Details/${dog.id}`}>    
+                                    {
+                                        
+                                        dog.reference_image_id  ? (<img src={`https://cdn2.thedogapi.com/images/${dog.reference_image_id}.jpg`} alt={`perro ${dog.name}`}/>) 
+                                        : (<img src={imgDog} alt="perro sospechozo"/>) 
+                                    }
+                                </Link>
+                            </div>
+                            <div>
+                                <h1>{dog.name}</h1>
                                 {
-                                    
-                                    dog.reference_image_id  ? (<img src={`https://cdn2.thedogapi.com/images/${dog.reference_image_id}.jpg`} alt={`perro ${dog.name}`}/>) 
-                                                            : (<img src={imgDog} alt="perro sospechozo"/>) 
+                                    dog.temperament ? (<p>{dog.temperament}</p>) : dog.temperamentos.map((temp) => {
+                                        return <p key={temp.id}>{temp.name}</p>
+                                    })
                                 }
-                            </Link>
-                            {
-                                dog.temperament ? (<p>{dog.temperament}</p>) : null //Join con la tabla temperamento
-                            }
-                            <p>{dog.weight.metric} Kg</p>
+                                <p>{dog.weight.metric} kg</p>
+                            </div>
                         </div>
             })}
         </section>

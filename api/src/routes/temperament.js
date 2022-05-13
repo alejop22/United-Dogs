@@ -18,18 +18,30 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.post('/', async (req, res) => {
-    const {nombre} = req.body;
-
+router.get('/find', async (req,res) => {
     try {
-        if (!nombre) {
+        const temperamentos = await Temperamento.findAll();
+
+        if (temperamentos.length === 0) {
+            throw 'La tabla esta vacia';
+        }
+        res.send('La tabla temperamentos esta llena');
+
+    } catch (error) {
+        res.status(404).send(error);
+    }
+});
+
+router.post('/', async (req, res) => {
+    const {name} = req.body;
+    try {
+        if (!name) {
             throw 'error en la peticion';
         }
-
-        const nombreTemp = await Temperamento.create({nombre});
+        const nombreTemp = await Temperamento.create({name});
         res.json(nombreTemp);
     } catch (e) {
-        res.status(400).send(e);
+        res.status(400).send(name);
     }
 });
 

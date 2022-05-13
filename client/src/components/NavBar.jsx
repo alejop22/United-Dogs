@@ -1,28 +1,41 @@
-import React, { useState } from "react"
-import { Link } from "react-router-dom"
-import { findDogAPI, findDogBD } from "../redux/actions";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { findDogAPI, findDogBD, insertTemperament, switchTemperaments } from "../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import style from '../components/navbar.module.css';
 
 export default function NavBar() {
 
     const dispatch = useDispatch();
-
+    const {switche} = useSelector(state => state);
     const [input, setInput] = useState('');
 
     const handlerChange = (e) => {
         setInput(e.target.value);
     }
 
+    useEffect(() => {
+        dispatch(switchTemperaments());
+        if (!switche) {
+            dispatch(insertTemperament());
+        }
+    },[switche]);
+
     return (
-        <div>
-            <ul>
-                <Link to='/'>
-                    <li>Home</li>
-                </Link>
-                <Link to='/create/breed'>
-                    <li>Create Breed</li>
-                </Link>
-            </ul>
+        <div className={style.navbar}>
+            <div className={style.container_list}>
+                <ul>
+                    <Link to='/'>
+                        <li>Home</li>
+                    </Link>
+                    <Link to='/create/breed'>
+                        <li>Create Breed</li>
+                    </Link>
+                    <Link to='/dogs'>
+                        <li>View Dogs</li>
+                    </Link>
+                </ul>
+            </div>
             {/* <div>
                 <input type="text" placeholder="Filtrar temperamento/raza"/>
                 <button>Filtrar</button>
@@ -31,7 +44,7 @@ export default function NavBar() {
                 <button>Orden alfabetico</button>
                 <button>Peso</button>
             </div> */}
-            <div>
+            <div className={style.container_input}>
                 <input onChange={e => {handlerChange(e)}} type="text" placeholder="Buscar raza..." value={input}/>
                 <button onClick={() => {
                     if (input === '') {

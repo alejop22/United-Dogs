@@ -1,0 +1,17 @@
+.container_cards {
+    padding: 0 20px 20px 20px;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.card_dog {
+    padding: 20px;
+    border: 1px solid red;
+    margin-top: 20px;
+    display: flex;
+}
+
+.card_dog img {
+    height: 150px;
+}
