@@ -8,12 +8,6 @@ export default function Dogs() {
 
     const dogs = useSelector(state => state.dogs);
 
-    // if (dogs[0].temperamentos) {
-    //     for (const i of dogs[0].temperamentos) {
-    //         temps += `${i}, `;
-    //     }
-    // }
-
     return (
         <section className={styles.container_cards}>
             {

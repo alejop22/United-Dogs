@@ -30,7 +30,7 @@ const findDogBD = (breed) => {
 
 const findIdDog = (id) => {
 
-    if (id.length > 2) {
+    if (id.length > 3) {
         return function(dispatch) {
             return fetch(`http://localhost:3001/dogs/${id}`)
                 .then(rs => {

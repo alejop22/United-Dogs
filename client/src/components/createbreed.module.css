@@ -8,5 +8,18 @@
 .form {
     display: flex;
     flex-direction: column;
-    width: 50%;
+    width: 100%;
+}
+
+.container_temperaments {
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid red;
+    padding: 5px;
+}
+
+.temperament {
+    border: 1px solid blue;
+    margin: 4px;
+    padding: 2px;
 }

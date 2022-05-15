@@ -14,6 +14,7 @@ export default function DogDetails() {
         dispatch(findIdDog(id));
     }, []);
     
+    console.log(dog);
     if (dog.id) {
         return (
             <div>
@@ -30,7 +31,7 @@ export default function DogDetails() {
                 }
                 <p>{dog.height.imperial} cm</p>
                 <p>{dog.weight.metric} kg</p>
-                <p>{dog.life_span}</p>
+                <p>{dog.life_span !== '' ? `${dog.life_span} years`  : null}</p>
             </div>
         );
     }
