@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { findDogAPI, findDogBD, insertTemperament, switchTemperaments } from "../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import style from '../components/navbar.module.css';
+import iconDog from '../assets/iconDog.png'
 
 export default function NavBar() {
 
@@ -26,6 +27,9 @@ export default function NavBar() {
             <div className={style.container_list}>
                 <ul>
                     <Link to='/'>
+                        <li><img src={iconDog}/></li>
+                    </Link>
+                    <Link to='/home'>
                         <li>Home</li>
                     </Link>
                     <Link to='/create/breed'>
@@ -36,14 +40,6 @@ export default function NavBar() {
                     </Link>
                 </ul>
             </div>
-            {/* <div>
-                <input type="text" placeholder="Filtrar temperamento/raza"/>
-                <button>Filtrar</button>
-            </div>
-            <div>
-                <button>Orden alfabetico</button>
-                <button>Peso</button>
-            </div> */}
             <div className={style.container_input}>
                 <input onChange={e => {handlerChange(e)}} type="text" placeholder="Buscar raza..." value={input}/>
                 <button onClick={() => {

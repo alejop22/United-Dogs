@@ -1,0 +1,14 @@
+.main {
+    background-image: url('../assets/Dog3.jpg');
+    background-color: #cccccc;
+    height: 700px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.main h1 {
+    color: white;
+    margin: 0;
+    margin-left: 200px;
+}

@@ -13,8 +13,7 @@ export default function DogDetails() {
     useEffect(() => {
         dispatch(findIdDog(id));
     }, []);
-    
-    console.log(dog);
+
     if (dog.id) {
         return (
             <div>

@@ -2,22 +2,38 @@
     padding: 10px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     font-weight: bold;
-    background-color: aqua;
+    background-color: #069A8E;
+}
+.container_list {
+    width: 50%;
 }
 
 .container_list ul {
     margin: 0;
     list-style: none;
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: larger;
 }
 
 .container_list li {
-    margin-right: 30px;
+    color: #F7FF93;
 }
 
 .container_list a {
     text-decoration: none;
+}
+
+.container_list img {
+    height: 55px;
+}
+
+.container_input {
+    width: 50%;
+    text-align: end;
 }
 
 .container_input input {

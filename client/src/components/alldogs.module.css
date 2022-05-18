@@ -1,0 +1,15 @@
+.container_dogs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.dogs {
+    border: 1px solid red;
+    display: flex;
+    padding: 10px;
+}
+
+.dogs img {
+    height: 100px;
+}

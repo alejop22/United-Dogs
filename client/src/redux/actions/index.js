@@ -1,4 +1,4 @@
-import { FIND_DOG, FIND_ID_DOG, SWITCH_TEMPERAMENT, FIND_TEMPERAMENTS } from './action-type.js';
+import { FIND_DOG, FIND_ID_DOG, SWITCH_TEMPERAMENT, FIND_TEMPERAMENTS, FIND_ALL_DOGS, DELETE_DOG } from './action-type.js';
 
 
 const findDogAPI = (breed) => {
@@ -51,6 +51,33 @@ const findIdDog = (id) => {
                 dispatch({type: FIND_ID_DOG, payload:data});
             })
     }
+}
+
+const findAllDogs = () => {
+    return function(dispatch) {
+        return fetch('https://api.thedogapi.com/v1/breeds')
+            .then(rs => rs.json())
+            .then(async dataAPI => {
+                const allDogs = dataAPI;
+
+                const rs = await fetch('http://localhost:3001/dogs');
+                const dataBD = await rs.json();
+
+                if (dataBD.length > 0) {
+                    for (const data of dataBD) {
+                        data.name = data.name.charAt(0).toUpperCase() + data.name.slice(1);
+                        allDogs.push(data);
+                    }
+                }
+                
+                dispatch({type: FIND_ALL_DOGS, payload: allDogs});
+
+            });
+    }
+}
+
+const deleteDog = (id) => {
+    return {type: DELETE_DOG, payload: id};
 }
 
 const insertTemperament = () => {
@@ -141,5 +168,7 @@ export {
     insertTemperament,
     switchTemperaments,
     createBreed,
-    findTemperaments
+    findTemperaments,
+    findAllDogs,
+    deleteDog
 }

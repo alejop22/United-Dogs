@@ -16,7 +16,13 @@ export default function CreateBreed() {
         temperaments: []
     });
 
-    const [errors, setErrors] = useState({});
+    const [errors, setErrors] = useState({
+        name: '*',
+        minHeight: '*',
+        maxHeight: '*',
+        minWeight: '*',
+        maxWeight: '*'
+    });
 
     const {temperaments} = useSelector(state => state);
 
@@ -64,7 +70,7 @@ export default function CreateBreed() {
         else if (!/^[A-Z]+$/i.test(input.name)) auxErrors.name = 'El campo nombre solo debe tener letras';
 
         if (input.minHeight === '') auxErrors.minHeight = 'La altura minima es obligatoria';
-        else if (!/^[0-9]*(\.?)[ 0-9]+$/.test(input.minHeight) || (input.minHeight * 1) > 100) auxErrors.minHeight = 'Solo se permiten numeros positivos';
+        else if (!/^[0-9]*(\.?)[ 0-9]+$/.test(input.minHeight) || (input.minHeight * 1) > 50) auxErrors.minHeight = 'Solo se permiten numeros positivos';
 
         if (input.maxHeight === '') auxErrors.maxHeight = 'La altura maxima es obligatoria';
         else if (!/^[0-9]*(\.?)[ 0-9\s]+$/.test(input.maxHeight) || (input.maxHeight * 1) > 100) auxErrors.maxHeight = 'Solo se permiten numeros positivos';
@@ -73,10 +79,10 @@ export default function CreateBreed() {
         else if (!/^[0-9]*(\.?)[ 0-9\s]+$/.test(input.minWeight) || (input.minWeight * 1) > 50) auxErrors.minWeight = 'Solo se permiten numeros positivos';
 
         if (input.maxWeight === '') auxErrors.maxWeight = 'El peso maximo es obligatorio';
-        else if (!/^[0-9]*(\.?)[ 0-9\s]+$/.test(input.maxWeight) || (input.maxWeight * 1) > 50) auxErrors.maxWeight = 'Solo se permiten numeros positivos';
+        else if (!/^[0-9]*(\.?)[ 0-9\s]+$/.test(input.maxWeight) || (input.maxWeight * 1) > 100) auxErrors.maxWeight = 'Solo se permiten numeros positivos';
 
         if (input.life_span !== '') {
-            if(!/^[0-9]*(\.?)[ 0-9\s]+$/.test(input.life_span) || (input.life_span * 1) > 50) auxErrors.life_span = 'Solo se permiten numeros positivos';
+            if(!/^[0-9]*(\.?)[ 0-9\s]+$/.test(input.life_span) || (input.life_span * 1) > 100) auxErrors.life_span = 'Solo se permiten numeros positivos';
         }
 
         return auxErrors;
@@ -121,7 +127,7 @@ export default function CreateBreed() {
                 </div>
 
                 <br />
-                <input type="submit" value='Crear' disabled={ Object.keys(errors).length > 0 ? true : false }/>
+                <input type="submit" value='Crear' disabled={ Object.keys(errors).length === 0 ? false : true }/>
             </form>
         </div>
     )

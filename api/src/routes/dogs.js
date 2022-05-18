@@ -11,7 +11,7 @@ router.get('/',  async (req, res) => {
             const razas = await Raza.findAll({
                 where: {
                     name: {
-                        [Op.like]: `%${name}%`
+                        [Op.eq]: name
                     }
                 },
                 include: [
@@ -43,6 +43,12 @@ router.get('/',  async (req, res) => {
             });
 
             if (razas.length > 0) {
+
+                for (const i of razas) {
+                    const metric = i.weight;
+                    i.weight = {metric};
+                }
+                
                 res.json(razas);
             } else {
                 throw {error: `No hay razas en la bd`};
