@@ -30,7 +30,7 @@ export default function DogDetails() {
                 }
                 <p>{dog.height.imperial} cm</p>
                 <p>{dog.weight.metric} kg</p>
-                <p>{dog.life_span !== '' ? `${dog.life_span} years`  : null}</p>
+                <p>{dog.life_span.includes('years') ? dog.life_span  : `${dog.life_span} years`}</p>
             </div>
         );
     }

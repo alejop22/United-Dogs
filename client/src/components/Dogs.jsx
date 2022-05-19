@@ -31,11 +31,14 @@ export default function Dogs() {
                             <div>
                                 <button onClick={() => handlerClick(dog.id)}>X</button>
                                 <h1>{dog.name}</h1>
-                                {
-                                    dog.temperament ? (<p>{dog.temperament}</p>) : dog.temperamentos.map((temp) => {
-                                        return <p key={temp.id}>{temp.name}</p>
-                                    })
-                                }
+                                <p>Temperamentos</p>
+                                <div className={styles.container_temps}>
+                                    {
+                                        dog.temperament ? (<p>{dog.temperament}</p>) : dog.temperamentos.map((temp) => {
+                                            return <p key={temp.id}>{temp.name}</p>
+                                        })
+                                    }
+                                </div>
                                 <p>{dog.weight.metric} kg</p>
                             </div>
                         </div>

@@ -1,0 +1,10 @@
+.container_footer {
+    background-color: #069A8E;
+    font-weight: bold;
+    color: #f7ff93;
+}
+
+.container_footer a {
+    text-decoration: none;
+    color: black;
+}

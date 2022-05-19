@@ -54,6 +54,7 @@ export default function CreateBreed() {
         });
     }
 
+    // Agrega o elimina temeperamentos del array
     const handlerClick = (e) => {
         if (e.target.checked) {
             setInput(prev => ({...prev, temperaments: [...prev.temperaments, e.target.value]}));
@@ -62,6 +63,7 @@ export default function CreateBreed() {
         }
     }
 
+    // Valida y crea errores en el objeto errores
     const handlerErrors = (input) => {
 
         const auxErrors = {}

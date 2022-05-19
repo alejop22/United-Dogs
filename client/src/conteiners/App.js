@@ -7,6 +7,7 @@ import CreateBreed from '../components/CreateBreed.jsx';
 import AllDogs from '../components/AllDogs';
 import NotFound from '../components/NotFound';
 import Main from '../components/Main';
+import Footer from '../components/Footer';
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
         <Route path='/dogs' element={<Dogs />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
+      <Footer />
     </div>
   );
 }

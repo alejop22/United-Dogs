@@ -1,8 +1,3 @@
-.container_dogs {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-}
 
 .dogs {
     border: 1px solid red;

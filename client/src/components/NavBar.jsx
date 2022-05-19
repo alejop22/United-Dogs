@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { findDogAPI, findDogBD, insertTemperament, switchTemperaments } from "../redux/actions";
+import { findDogAPI, findDogBD, switchTemperaments } from "../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import style from '../components/navbar.module.css';
 import iconDog from '../assets/iconDog.png'
@@ -8,17 +8,68 @@ import iconDog from '../assets/iconDog.png'
 export default function NavBar() {
 
     const dispatch = useDispatch();
-    const {switche} = useSelector(state => state);
+    const {switche, dogs} = useSelector(state => state);
     const [input, setInput] = useState('');
 
     const handlerChange = (e) => {
         setInput(e.target.value);
     }
 
+    // Le pasamos un array de todos los temperamentos de la API y los inserta en la BD
+    const postTemperament = async (temps) => {
+        for (const iterator of temps) {
+            try {
+                const objTemperamento = {name: iterator}
+                
+                const rsDB = await fetch('http://localhost:3001/temperament', {
+                    method: 'POST',
+                    body: JSON.stringify(objTemperamento),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                if (!rsDB.ok) {
+                    throw 'Error al guardar temperamento en la base de datos';
+                }
+                
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    }
+
+    // Hace la peticion a la API y crea un array de temperamentos
+    const findFilterTemperament = () => {
+        return function() {
+            return fetch('https://api.thedogapi.com/v1/breeds')
+                .then(rs => rs.json())
+                .then((data) => {
+                    if(data.length === 0) {
+                        throw 'Error consumo API'
+                    }
+                    const arrAux = [];
+                    for (const iterator of data) {
+                        
+                        if (iterator.temperament) {
+    
+                            const temperamentos = iterator.temperament.replace(/,/g, '');
+                            const arrTemperamentos = temperamentos.split(' ');
+                            for (const i of arrTemperamentos) {
+                                arrAux.push(i);
+                            }
+                        }
+                    }
+                    const soloTemperamentos = [...new Set(arrAux)]; // Guardo todos los temperamentos sin repetirlos
+                    postTemperament(soloTemperamentos);
+                })
+                .catch(e => console.log(e));
+        }
+    }
+
     useEffect(() => {
         dispatch(switchTemperaments());
         if (!switche) {
-            dispatch(insertTemperament());
+            dispatch(findFilterTemperament());
         }
     },[switche]);
 
@@ -46,8 +97,15 @@ export default function NavBar() {
                     if (input === '') {
                         alert('Debe escribir una raza en el input');
                     } else {
-                        dispatch(findDogAPI(input));
-                        dispatch(findDogBD(input));
+                        
+                        const repeatNames = dogs.filter(d => d.name === (input.charAt(0).toUpperCase() + input.slice(1)));
+                        
+                        if (repeatNames.length < 1) {
+                            dispatch(findDogAPI(input));
+                            dispatch(findDogBD(input));
+                        } else {
+                            alert('La raza ya esta en pantalla');
+                        }
                         setInput('');
                     }
                 }}>Buscar</button>

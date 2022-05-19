@@ -7,11 +7,18 @@
 
 .card_dog {
     padding: 20px;
-    border: 1px solid red;
+    border: 2px solid #069a8e;
+    border-radius: 10px;
     margin-top: 20px;
     display: flex;
+    color: #393E46;
+    background-color: #BBDED6;
 }
 
 .card_dog img {
     height: 150px;
+}
+
+.container_temps {
+    border: 1px solid red;
 }
