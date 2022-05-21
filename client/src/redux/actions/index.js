@@ -168,7 +168,13 @@ const createBreed = (breed) => {
             headers: {
                 'Content-Type': 'application/json'
             }
-        }).then(rs => console.log(rs));
+        }).then(rs => {
+            if (rs.ok) {
+                alert('La raza se ha creado correctamente');
+            } else {
+                alert(`Error al crear la raza ${rs.statusText}`);
+            }
+        });
     }
 }
 

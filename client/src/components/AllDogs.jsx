@@ -120,50 +120,56 @@ export default function AllDogs() {
                 }
             }
         }
+        
     }
 
     // Despacha las acciones de filtrar por nombre de perro tanto desde la API como BD
     const handlerFilterBreed = (name) => {
         dispatch(filterBreedAPI(name));
         dispatch(filterBreedBD(name));
+        setFirstIndex(0);
     }
     
     return (
         <div>
-            <button onClick={ordenarAlfa}>Ordenar Alfabeticamente</button>
-            <button onClick={ordenarPeso}>Ordenar Peso</button>
+            <div className={styles.container_filter}>
+                <div>
+                    <button onClick={ordenarAlfa}>Ordenar Alfabeticamente</button>
+                    <button onClick={ordenarPeso}>Ordenar Peso</button>
+                </div>
+                <button onClick={handlerAll}>Lista completa</button>
+                <div>
+                    <input type="text" onChange={e => handlerChange(e)} value={temperament} placeholder='Escribe filtro...'/>
+                    <button onClick={() => {
+                        if (temperament === '') {
+                            alert('Debe escribir un temperamento para filtrar');
+                        } else {
+                            if (filterDogs.length === 0) {
+                                handlerFilter(temperament);
+                                setTemperament('');
+                            }
+                            else alert('Ya se encuentra filtrado'); 
+                        }
+                        
+                    }}>Filtrar Temperamento</button>
+                    <button onClick={() => {
+                        if (temperament === '') {
+                            alert('Debe escribir una raza para filtrar');
+                        } else {
+                            if(filterDogs.length === 0) {
+                                handlerFilterBreed(temperament);
+                                setTemperament('');
+                            }
+                            else alert('Ya se encuentra filtrado');
+                        }
+                    }}>Filtrar Raza</button>
+                </div>
+            </div>
             <br />
-            <button onClick={prevHandler}>Prev</button>
-            <button onClick={nextHandler}>Next</button>
-            <input type="text" onChange={e => handlerChange(e)} value={temperament}/>
-            <button onClick={() => {
-                if (temperament === '') {
-                    alert('Debe escribir un temperamento para filtrar');
-                } else {
-                    if (filterDogs.length === 0) {
-                        handlerFilter(temperament);
-                        setTemperament('');
-                    }
-                    else alert('Ya se encuentra filtrado'); 
-                }
-                
-            }}>Filtrar Temperamento</button>
-            <button onClick={() => {
-                const repeatDog = filterDogs.filter(d => d.name === temperament);
-
-                if (temperament === '') {
-                    alert('Debe escribir una raza para filtrar');
-                } else {
-                    if(repeatDog.length === 0) {
-                        handlerFilterBreed(temperament);
-                        setTemperament('');
-                    }
-                    else alert('Ya se encuentra filtrado');
-                }
-
-            }}>Filtrar Raza</button>
-            <button onClick={handlerAll}>Lista completa</button>
-            
+            <div className={styles.container_pages}>
+                <button onClick={prevHandler}>Prev</button>
+                <button onClick={nextHandler}>Next</button>
+            </div>
             <div className={styles.container_dogs}>
                 {
                 [...allDogs].splice(
@@ -181,15 +187,21 @@ export default function AllDogs() {
                                 </div>
                                 <div>
                                     <h1>{dog.name}</h1>
+                                    <h3>Peso:</h3>
+                                    <p>{dog.weight.metric} kg</p>
+                                    <h3>Temperamentos:</h3>
                                     {
                                         dog.temperament ? (<p>{dog.temperament}</p>) : dog.temperamentos?.map((temp) => {
                                             return <p key={temp.id}>{temp.name}</p>
                                         })
                                     }
-                                    <p>{dog.weight.metric} kg</p>
                                 </div>
                             </div>
                 })}
+            </div>
+            <div className={styles.container_pages}>
+                <button onClick={prevHandler}>Prev</button>
+                <button onClick={nextHandler}>Next</button>
             </div>
         </div>
     );

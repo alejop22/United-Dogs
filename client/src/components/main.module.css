@@ -5,10 +5,17 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.main h1 {
+.title {
+}
+
+.title h1 {
     color: white;
     margin: 0;
+    margin-bottom: 500px;
     margin-left: 200px;
 }

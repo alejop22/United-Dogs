@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { findIdDog } from "../redux/actions";
 import imgDog from '../assets/Dog4.jpg';
+import styles from '../components/dogdetails.module.css';
 
 export default function DogDetails() {
 
@@ -16,21 +17,27 @@ export default function DogDetails() {
 
     if (dog.id) {
         return (
-            <div>
-                {
-                                    
-                    dog.reference_image_id  ? (<img src={`https://cdn2.thedogapi.com/images/${dog.reference_image_id}.jpg`} alt={`perro ${dog.name}`}/>) 
-                                            : (<img src={imgDog} alt="perro sospechozo"/>) 
-                }
-                <p>{dog.name}</p>
-                {
-                    dog.temperament ? (<p>{dog.temperament}</p>) : dog.temperamentos.map((temp) => {
-                        return <p key={temp.id}>{temp.name}</p>
-                    })
-                }
-                <p>{dog.height.imperial} cm</p>
-                <p>{dog.weight.metric} kg</p>
-                <p>{dog.life_span.includes('years') ? dog.life_span  : `${dog.life_span} years`}</p>
+            <div className={styles.container_dog}>
+                <div className={styles.dog_details}>
+                    <h1>{dog.name}</h1>
+                    {
+                                        
+                        dog.reference_image_id  ? (<img src={`https://cdn2.thedogapi.com/images/${dog.reference_image_id}.jpg`} alt={`perro ${dog.name}`}/>) 
+                                                : (<img src={imgDog} alt="perro sospechozo"/>) 
+                    }
+                    <h3>Altura:</h3>
+                    <p>{dog.height.imperial} cm</p>
+                    <h3>Peso: </h3>
+                    <p>{dog.weight.metric} kg</p>
+                    <h3>Esperanza de vida:</h3>
+                    <p>{dog.life_span.includes('years') ? dog.life_span  : `${dog.life_span} years`}</p>
+                    <h3>Temperamentos:</h3>
+                    {
+                        dog.temperament ? (<p>{dog.temperament}</p>) : dog.temperamentos.map((temp) => {
+                            return <p key={temp.id}>{temp.name}</p>
+                        })
+                    }
+                </div>
             </div>
         );
     }

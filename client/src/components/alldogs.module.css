@@ -1,10 +1,66 @@
+.container_filter {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 10px;
+}
+
+.container_filter button {
+    margin-left: 20px;
+    padding: 8px;
+    font-weight: bold;
+    border-radius: 10px;
+    border: none;
+    background-color: #FAF0D7;
+    cursor: pointer;
+}
+
+.container_filter button:hover {
+    box-shadow: 6px 5px 9px -1px #000000;
+}
+
+.container_filter input {
+    padding: 4px;
+    border: none;
+    border-radius: 10px;
+}
+
+.container_pages button{
+    margin-right: 10px;
+    margin-left: 12px;
+    margin-bottom: 10px;
+    padding: 8px;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    background-color: #FAF0D7;
+    cursor: pointer;
+}
+
+.container_pages button:hover {
+    box-shadow: 6px 5px 9px -1px #000000;
+}
+
+.container_dogs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 10px;
+    width: 100%;
+}
 
 .dogs {
-    border: 1px solid red;
+    border-radius: 10px;
+    border: 2px solid #069a8e;
+    background-color: #BBDED6;
     display: flex;
+    justify-content: space-around;
+    align-items: center;
     padding: 10px;
+    margin: 0 10px 10px 0;
+    width: 40%;
 }
 
 .dogs img {
-    height: 100px;
+    height: 180px;
+    border-radius: 10px;
 }

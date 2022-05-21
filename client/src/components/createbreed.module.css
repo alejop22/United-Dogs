@@ -8,18 +8,61 @@
 .form {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    align-items: center;
+}
+
+.form_details {
+    display: flex;
+}
+
+.container_details {
+    display: flex;
+    margin-top: 25px;
+    margin-right: 10px;
+    flex-direction: column;
+    width: 30%;
+    font-weight: bold;
+}
+
+.container_details input {
+    margin-bottom: 20px;
+    margin-top: 10px;
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+}
+
+.temperaments_details {
+    width: 70%;
+}
+.temperaments_details h2 {
+    margin: 0;
 }
 
 .container_temperaments {
     display: flex;
     flex-wrap: wrap;
-    border: 1px solid red;
     padding: 5px;
 }
 
 .temperament {
-    border: 1px solid blue;
+    background-color: #BBDED6;
+    border: 1.5px solid #069a8e;
     margin: 4px;
     padding: 2px;
+}
+
+.btn_create {
+    border: none;
+    border-radius: 10px;
+    width: 50%;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 25px;
+    font-weight: bold;
+    background-color: #FAF0D7;
+}
+
+.btn_create:hover {
+    box-shadow: 6px 5px 9px -1px #000000;
 }

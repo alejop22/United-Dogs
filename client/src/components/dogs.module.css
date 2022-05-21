@@ -6,19 +6,57 @@
 }
 
 .card_dog {
-    padding: 20px;
+    padding: 10px;
     border: 2px solid #069a8e;
     border-radius: 10px;
     margin-top: 20px;
-    display: flex;
     color: #393E46;
     background-color: #BBDED6;
 }
 
-.card_dog img {
+.dog_button {
+    text-align: right;
+}
+
+.dog_button button {
+    background-color: #EA5455;
+    border-radius: 5px;
+    border: 1px solid #2D4059;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 8px;
+}
+
+.dog_title {
+    display: flex;
+    justify-content: center;
+}
+
+.dog_title h1{
+    margin: 0;
+    font-size: 35px;
+}
+
+.details {
+    display: flex;
+}
+
+.details_names {
+    text-align: right;
+    margin-left: 120px;
+    margin-top: 20px;
+}
+
+.details img {
     height: 150px;
+    border-radius: 10px;
 }
 
 .container_temps {
-    border: 1px solid red;
+    border-radius: 10px;
+    padding: 0 10px 10px 10px;
+}
+
+.container_temps p {
+    margin-bottom: 0px;
 }
