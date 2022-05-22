@@ -25,13 +25,13 @@ export default function DogDetails() {
                         dog.reference_image_id  ? (<img src={`https://cdn2.thedogapi.com/images/${dog.reference_image_id}.jpg`} alt={`perro ${dog.name}`}/>) 
                                                 : (<img src={imgDog} alt="perro sospechozo"/>) 
                     }
-                    <h3>Altura:</h3>
+                    <h3>Height:</h3>
                     <p>{dog.height.imperial} cm</p>
-                    <h3>Peso: </h3>
+                    <h3>Weight:</h3>
                     <p>{dog.weight.metric} kg</p>
-                    <h3>Esperanza de vida:</h3>
+                    <h3>Life span:</h3>
                     <p>{dog.life_span.includes('years') ? dog.life_span  : `${dog.life_span} years`}</p>
-                    <h3>Temperamentos:</h3>
+                    <h3>Temperaments:</h3>
                     {
                         dog.temperament ? (<p>{dog.temperament}</p>) : dog.temperamentos.map((temp) => {
                             return <p key={temp.id}>{temp.name}</p>
