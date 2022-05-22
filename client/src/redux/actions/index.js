@@ -1,13 +1,26 @@
-import { FIND_DOG, FIND_ID_DOG, SWITCH_TEMPERAMENT, FIND_TEMPERAMENTS, FIND_ALL_DOGS, DELETE_DOG, FILTER_DOGS, CLEAN_FILTER, FILTER_BREED } from './action-type.js';
+import {FIND_DOG,
+        FIND_ID_DOG,
+        SWITCH_TEMPERAMENT,
+        FIND_TEMPERAMENTS,
+        FIND_ALL_DOGS,
+        DELETE_DOG,
+        FILTER_DOGS,
+        CLEAN_FILTER,
+        FILTER_BREED
+} from './action-type.js';
+
+const baseApiDogs = 'https://api.thedogapi.com/v1/breeds/';
+const baseApi = 'http://localhost:3001/';
 
 // Hace peticion a la API de un perro por el query del nombre
 const findDogAPI = (breed) => {
     return function(dispatch) {
-        return fetch(`https://api.thedogapi.com/v1/breeds/search?q=${breed}`)
+        return fetch(`${baseApiDogs}search?q=${breed}`)
             .then(rs => rs.json())
             .then(async (data) => {
                 if(data.length === 0) throw `No se encontró la raza ${breed} en la API`;
-                dispatch({type: FIND_DOG, payload: data[0]});
+                if (data[0].name === breed) dispatch({type: FIND_DOG, payload: data[0]});
+                else throw `No se encontró la raza ${breed} en la API`;
             })
             .catch(e => console.log(e));
     }
@@ -17,7 +30,7 @@ const findDogAPI = (breed) => {
 const findDogBD = (breed) => {
     breed = breed.charAt(0).toUpperCase() + breed.slice(1);
     return function(dispatch) {
-        return fetch(`http://localhost:3001/dogs?name=${breed}`)
+        return fetch(`${baseApi}dogs?name=${breed}`)
             .then(rs => {
                 if(!rs.ok) throw rs.statusText+ ' in data base';
                 return rs.json();
@@ -34,7 +47,7 @@ const findDogBD = (breed) => {
 const findIdDog = (id) => {
     if (id.length > 3) {
         return function(dispatch) {
-            return fetch(`http://localhost:3001/dogs/${id}`)
+            return fetch(`${baseApi}dogs/${id}`)
                 .then(rs => {
                     if(!rs.ok) throw rs.statusText+ ' in data base';
                     return rs.json();
@@ -47,7 +60,7 @@ const findIdDog = (id) => {
         }
     }
     return function(dispatch) {
-        return fetch(`https://api.thedogapi.com/v1/breeds/${id}`)
+        return fetch(`${baseApiDogs}${id}`)
             .then(rs => rs.json())
             .then(data => {
                 dispatch({type: FIND_ID_DOG, payload:data});
@@ -59,7 +72,7 @@ const findIdDog = (id) => {
 const filterTemp = (id) => {
     if (id.length > 3) {
         return function(dispatch) {
-            return fetch(`http://localhost:3001/dogs/${id}`)
+            return fetch(`${baseApi}dogs/${id}`)
                 .then(rs => {
                     if(!rs.ok) throw rs.statusText+ ' in data base';
                     return rs.json();
@@ -72,7 +85,7 @@ const filterTemp = (id) => {
         }
     }
     return function(dispatch) {
-        return fetch(`https://api.thedogapi.com/v1/breeds/${id}`)
+        return fetch(`${baseApiDogs}${id}`)
             .then(rs => rs.json())
             .then(data => {
                 dispatch({type: FILTER_DOGS, payload:data});
@@ -80,15 +93,16 @@ const filterTemp = (id) => {
     }
 }
 
-
 // Hace peticion a la API de un perro por el query del nombre para llenar el array de filtrado
 const filterBreedAPI = (breed) => {
     return function(dispatch) {
-        return fetch(`https://api.thedogapi.com/v1/breeds/search?q=${breed}`)
+        return fetch(`${baseApiDogs}search?q=${breed}`)
             .then(rs => rs.json())
             .then(async (data) => {
                 if(data.length === 0) throw `No se encontró la raza ${breed} en la API`;
-                dispatch({type: FILTER_BREED, payload: data[0]});
+                for (const i of data) {
+                    dispatch({type: FILTER_BREED, payload: i});
+                }
             })
             .catch(e => console.log(e));
     }
@@ -98,7 +112,7 @@ const filterBreedAPI = (breed) => {
 const filterBreedBD = (breed) => {
     breed = breed.charAt(0).toUpperCase() + breed.slice(1);
     return function(dispatch) {
-        return fetch(`http://localhost:3001/dogs?name=${breed}`)
+        return fetch(`${baseApi}dogs?name=${breed}`)
             .then(rs => {
                 if(!rs.ok) throw rs.statusText+ ' in data base';
                 return rs.json();
@@ -119,13 +133,13 @@ const cleanFilter = () => {
 // Consulta en el API y en la BD todos los perros
 const findAllDogs = () => {
     return function(dispatch) {
-        return fetch('https://api.thedogapi.com/v1/breeds')
+        return fetch(baseApiDogs)
             .then(rs => rs.json())
             .then(async dataAPI => {
 
                 const allDogs = dataAPI;
 
-                const rs = await fetch('http://localhost:3001/dogs');
+                const rs = await fetch(`${baseApi}dogs`);
                 const dataBD = await rs.json();
 
                 if (dataBD.length > 0) {
@@ -147,7 +161,7 @@ const deleteDog = (id) => {
 // Modifica el estado del switch dependiendo si hay temperamentos o no en la BD
 const switchTemperaments = () => {
     return function(dispatch) {
-        return fetch('http://localhost:3001/temperament/find')
+        return fetch(`${baseApi}temperament/find`)
             .then(rs => {
                 if (rs.ok) {
                     dispatch({type: SWITCH_TEMPERAMENT, payload: true});
@@ -162,7 +176,7 @@ const switchTemperaments = () => {
 const createBreed = (breed) => {
     breed.name = breed.name.charAt(0).toUpperCase() + breed.name.slice(1);
     return function() {
-        return fetch('http://localhost:3001/dog', {
+        return fetch(`${baseApi}dog`, {
             method: 'POST',
             body: JSON.stringify(breed),
             headers: {
@@ -170,9 +184,9 @@ const createBreed = (breed) => {
             }
         }).then(rs => {
             if (rs.ok) {
-                alert('La raza se ha creado correctamente');
+                alert('The breed has been created successfully');
             } else {
-                alert(`Error al crear la raza ${rs.statusText}`);
+                alert(`Error creating breed ${rs.statusText}`);
             }
         });
     }
@@ -181,7 +195,7 @@ const createBreed = (breed) => {
 // Consulta los temperamentos de la BD
 const findTemperaments = () => {
     return function(dispatch) {
-        return fetch('http://localhost:3001/temperament')
+        return fetch(`${baseApi}temperament`)
             .then(rs => rs.json())
             .then(data => {
                 dispatch({type: FIND_TEMPERAMENTS, payload: data});

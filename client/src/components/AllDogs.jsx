@@ -4,10 +4,10 @@ import { findAllDogs, filterTemp , cleanFilter, filterBreedAPI, filterBreedBD } 
 import { Link } from "react-router-dom";
 import imgDog from '../assets/Dog4.jpg';
 import styles from '../components/alldogs.module.css';
+export const itemsPerPage = 8;
 
 export default function AllDogs() {
 
-    const itemsPerPage = 8;
     const dispatch = useDispatch();
     const {allDogs, filterDogs} = useSelector(state => state);
     
@@ -69,20 +69,33 @@ export default function AllDogs() {
     // Ordena por peso todo el array de perros
     const ordenarPeso = () => {
         setDogs(allDogs.sort((a,b) => {
+            let sumA;
+            let sumB;
+
+            if (a.weight.metric[1])  sumA = (a.weight.metric[0]+a.weight.metric[1])*1;
+            else sumA = a.weight.metric*1;
+            
+            if (b.weight.metric[1]) sumB = (b.weight.metric[0]+b.weight.metric[1])*1;
+            else sumB = b.weight.metric*1;
+            
+            if (isNaN(sumA)) sumA = 0;
+            if (isNaN(sumB)) sumB = 0;
+
             if (auxSwitchPeso) {
-                setSwitchPeso(false);     
-                if (((a.weight.metric[0]+a.weight.metric[1])*1) > ((b.weight.metric[0]+b.weight.metric[1])*1)) {
+                setSwitchPeso(false);
+                
+                if (sumA > sumB) {
                     return 1
-                } else if (((a.weight.metric[0]+a.weight.metric[1])*1) < ((b.weight.metric[0]+b.weight.metric[1])*1)) {
+                } else if (sumA < sumB) {
                     return -1;
                 } 
                 return 0;
             }
 
             setSwitchPeso(true);
-            if (((a.weight.metric[0]+a.weight.metric[1])*1) < ((b.weight.metric[0]+b.weight.metric[1])*1)) {
+            if (sumA < sumB) {
                 return 1
-            } else if (((a.weight.metric[0]+a.weight.metric[1])*1) > ((b.weight.metric[0]+b.weight.metric[1])*1)) {
+            } else if (sumA > sumB) {
                 return -1;
             }
             return 0;
@@ -134,35 +147,35 @@ export default function AllDogs() {
         <div>
             <div className={styles.container_filter}>
                 <div>
-                    <button onClick={ordenarAlfa}>Ordenar Alfabeticamente</button>
-                    <button onClick={ordenarPeso}>Ordenar Peso</button>
+                    <button onClick={ordenarAlfa}>Alphabetical order</button>
+                    <button onClick={ordenarPeso}>Sort by weight</button>
                 </div>
-                <button onClick={handlerAll}>Lista completa</button>
+                <button onClick={handlerAll}>Complete list</button>
                 <div>
-                    <input type="text" onChange={e => handlerChange(e)} value={temperament} placeholder='Escribe filtro...'/>
+                    <input type="text" onChange={e => handlerChange(e)} value={temperament} placeholder='Write filter...'/>
                     <button onClick={() => {
                         if (temperament === '') {
-                            alert('Debe escribir un temperamento para filtrar');
+                            alert('You must write a temperament to filter');
                         } else {
                             if (filterDogs.length === 0) {
                                 handlerFilter(temperament);
                                 setTemperament('');
                             }
-                            else alert('Ya se encuentra filtrado'); 
+                            else alert('Its already filtered'); 
                         }
                         
-                    }}>Filtrar Temperamento</button>
+                    }}>Filter temperament</button>
                     <button onClick={() => {
                         if (temperament === '') {
-                            alert('Debe escribir una raza para filtrar');
+                            alert('You must write a breed to filter');
                         } else {
                             if(filterDogs.length === 0) {
                                 handlerFilterBreed(temperament);
                                 setTemperament('');
                             }
-                            else alert('Ya se encuentra filtrado');
+                            else alert('Its already filtered');
                         }
-                    }}>Filtrar Raza</button>
+                    }}>Filter breed</button>
                 </div>
             </div>
             <br />
@@ -187,9 +200,9 @@ export default function AllDogs() {
                                 </div>
                                 <div>
                                     <h1>{dog.name}</h1>
-                                    <h3>Peso:</h3>
+                                    <h3>Weight:</h3>
                                     <p>{dog.weight.metric} kg</p>
-                                    <h3>Temperamentos:</h3>
+                                    <h3>Temperaments:</h3>
                                     {
                                         dog.temperament ? (<p>{dog.temperament}</p>) : dog.temperamentos?.map((temp) => {
                                             return <p key={temp.id}>{temp.name}</p>

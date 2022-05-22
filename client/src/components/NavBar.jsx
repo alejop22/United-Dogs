@@ -66,6 +66,10 @@ export default function NavBar() {
         }
     }
 
+    const upperCase = (breed) => {
+        return breed.charAt(0).toUpperCase() + breed.slice(1)
+    }
+
     useEffect(() => {
         dispatch(switchTemperaments());
         if (!switche) {
@@ -92,23 +96,23 @@ export default function NavBar() {
                 </ul>
             </div>
             <div className={style.container_input}>
-                <input onChange={e => {handlerChange(e)}} type="text" placeholder="Buscar raza..." value={input}/>
+                <input onChange={e => {handlerChange(e)}} type="text" placeholder="Search breed..." value={input}/>
                 <button onClick={() => {
                     if (input === '') {
-                        alert('Debe escribir una raza en el input');
+                        alert('You must write a race in the input');
                     } else {
                         
-                        const repeatNames = dogs.filter(d => d.name === (input.charAt(0).toUpperCase() + input.slice(1)));
+                        const repeatNames = dogs.filter(d => d.name === upperCase(input));
                         
                         if (repeatNames.length < 1) {
-                            dispatch(findDogAPI(input));
-                            dispatch(findDogBD(input));
+                            dispatch(findDogAPI(upperCase(input)));
+                            dispatch(findDogBD(upperCase(input)));
                         } else {
-                            alert('La raza ya esta en pantalla');
+                            alert('The breed is already on the screen');
                         }
                         setInput('');
                     }
-                }}>Buscar</button>
+                }}>Search</button>
             </div>
         </div>
     )

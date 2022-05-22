@@ -15,7 +15,7 @@ router.use('/temperament', temperamento);
 router.post('/dog', async (req, res) => {
     const { name, minHeight, maxHeight, minWeight, maxWeight, life_span, temperaments } = req.body;
     const id = new Date().getTime();
-    console.log(name, minHeight, maxHeight, minWeight, maxWeight, life_span, temperaments);
+    
     try {
 
         if (!name || !minHeight || !maxHeight || !minWeight || !maxWeight) {
