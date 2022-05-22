@@ -1,4 +1,5 @@
-import { FIND_DOG, FIND_ID_DOG, SWITCH_TEMPERAMENT, FIND_TEMPERAMENTS, FIND_ALL_DOGS, DELETE_DOG, FILTER_DOGS, CLEAN_FILTER, FILTER_BREED } from './action-type.js';
+import { FIND_DOG, FIND_ID_DOG, SWITCH_TEMPERAMENT, FIND_TEMPERAMENTS, FIND_ALL_DOGS,
+        DELETE_DOG, FILTER_DOGS, CLEAN_FILTER, FILTER_BREED } from './action-type.js';
 
 // Hace peticion a la API de un perro por el query del nombre
 const findDogAPI = (breed) => {
@@ -7,7 +8,8 @@ const findDogAPI = (breed) => {
             .then(rs => rs.json())
             .then(async (data) => {
                 if(data.length === 0) throw `No se encontró la raza ${breed} en la API`;
-                dispatch({type: FIND_DOG, payload: data[0]});
+                if (data[0].name === breed) dispatch({type: FIND_DOG, payload: data[0]});
+                else throw `No se encontró la raza ${breed} en la API`;
             })
             .catch(e => console.log(e));
     }
@@ -80,7 +82,6 @@ const filterTemp = (id) => {
     }
 }
 
-
 // Hace peticion a la API de un perro por el query del nombre para llenar el array de filtrado
 const filterBreedAPI = (breed) => {
     return function(dispatch) {
@@ -88,7 +89,9 @@ const filterBreedAPI = (breed) => {
             .then(rs => rs.json())
             .then(async (data) => {
                 if(data.length === 0) throw `No se encontró la raza ${breed} en la API`;
-                dispatch({type: FILTER_BREED, payload: data[0]});
+                for (const i of data) {
+                    dispatch({type: FILTER_BREED, payload: i});
+                }
             })
             .catch(e => console.log(e));
     }
@@ -170,9 +173,9 @@ const createBreed = (breed) => {
             }
         }).then(rs => {
             if (rs.ok) {
-                alert('La raza se ha creado correctamente');
+                alert('The breed has been created successfully');
             } else {
-                alert(`Error al crear la raza ${rs.statusText}`);
+                alert(`Error creating breed ${rs.statusText}`);
             }
         });
     }

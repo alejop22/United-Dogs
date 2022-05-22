@@ -35,13 +35,13 @@ export default function Dogs() {
                                         }
                                     </Link>
                                 </div>
-                                <div className={styles.details_names}>
-                                    <h2>Peso:</h2>
+                                <div>
+                                    <h2>Weight:</h2>
                                     <p>{dog.weight.metric} kg</p>
                                 </div>
                             </div>
                             <div className={styles.container_temps}>
-                                <h2>Temperamentos:</h2>
+                                <h2>Temperaments:</h2>
                                 {
                                     dog.temperament ? (<p>{dog.temperament}</p>) : dog.temperamentos.map((temp) => {
                                         return <p key={temp.id}>{temp.name}</p>
@@ -50,7 +50,7 @@ export default function Dogs() {
                             </div>
                         </div>
             }): <div>
-                    <h1>Sin perritos</h1>
+                    <h1>Sin perritos 🌭</h1>
                 </div>}
         </section>
     );
