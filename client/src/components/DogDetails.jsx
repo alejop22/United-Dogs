@@ -33,7 +33,7 @@ export default function DogDetails() {
                     <p>{dog.life_span.includes('years') ? dog.life_span  : `${dog.life_span} years`}</p>
                     <h3>Temperaments:</h3>
                     {
-                        dog.temperament ? (<p>{dog.temperament}</p>) : dog.temperamentos.map((temp) => {
+                        dog.temperament ? (<p>{dog.temperament}</p>) : dog.temperamentos?.map((temp) => {
                             return <p key={temp.id}>{temp.name}</p>
                         })
                     }
