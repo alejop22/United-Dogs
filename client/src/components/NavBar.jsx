@@ -18,7 +18,6 @@ export default function NavBar() {
 
     // Le pasamos un array de todos los temperamentos de la API y los inserta en la BD
     const postTemperament = async (temps) => {
-        console.log(temps.length);
         for (const iterator of temps) {
             try {
                 const objTemperamento = {name: iterator}
