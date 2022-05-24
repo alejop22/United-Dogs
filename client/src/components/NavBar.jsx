@@ -14,14 +14,16 @@ export default function NavBar() {
     const handlerChange = (e) => {
         setInput(e.target.value);
     }
+    const {REACT_APP_BACK} = process.env;
 
     // Le pasamos un array de todos los temperamentos de la API y los inserta en la BD
     const postTemperament = async (temps) => {
+        console.log(temps.length);
         for (const iterator of temps) {
             try {
                 const objTemperamento = {name: iterator}
                 
-                const rsDB = await fetch('http://localhost:3001/temperament', {
+                const rsDB = await fetch(`${REACT_APP_BACK}temperament`, {
                     method: 'POST',
                     body: JSON.stringify(objTemperamento),
                     headers: {

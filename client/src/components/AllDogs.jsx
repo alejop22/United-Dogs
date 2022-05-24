@@ -184,7 +184,7 @@ export default function AllDogs() {
                 <button onClick={nextHandler}>Next</button>
             </div>
             <div className={styles.container_dogs}>
-                {
+                { allDogs.length !== 0 ?
                 [...allDogs].splice(
                     firstIndex,itemsPerPage
                 ).map((dog) => {
@@ -210,7 +210,7 @@ export default function AllDogs() {
                                     }
                                 </div>
                             </div>
-                })}
+                }): <h1>Loading...</h1>}
             </div>
             <div className={styles.container_pages}>
                 <button onClick={prevHandler}>Prev</button>
