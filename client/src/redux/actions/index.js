@@ -10,7 +10,7 @@ import {FIND_DOG,
 } from './action-type.js';
 
 const baseApiDogs = 'https://api.thedogapi.com/v1/breeds/';
-const baseApi = 'http://localhost:3001/';
+const {REACT_APP_BACK} = process.env;
 
 // Hace peticion a la API de un perro por el query del nombre
 const findDogAPI = (breed) => {
@@ -30,7 +30,7 @@ const findDogAPI = (breed) => {
 const findDogBD = (breed) => {
     breed = breed.charAt(0).toUpperCase() + breed.slice(1);
     return function(dispatch) {
-        return fetch(`${baseApi}dogs?name=${breed}`)
+        return fetch(`${REACT_APP_BACK}dogs?name=${breed}`)
             .then(rs => {
                 if(!rs.ok) throw rs.statusText+ ' in data base';
                 return rs.json();
@@ -47,7 +47,7 @@ const findDogBD = (breed) => {
 const findIdDog = (id) => {
     if (id.length > 3) {
         return function(dispatch) {
-            return fetch(`${baseApi}dogs/${id}`)
+            return fetch(`${REACT_APP_BACK}dogs/${id}`)
                 .then(rs => {
                     if(!rs.ok) throw rs.statusText+ ' in data base';
                     return rs.json();
@@ -72,7 +72,7 @@ const findIdDog = (id) => {
 const filterTemp = (id) => {
     if (id.length > 3) {
         return function(dispatch) {
-            return fetch(`${baseApi}dogs/${id}`)
+            return fetch(`${REACT_APP_BACK}dogs/${id}`)
                 .then(rs => {
                     if(!rs.ok) throw rs.statusText+ ' in data base';
                     return rs.json();
@@ -112,7 +112,7 @@ const filterBreedAPI = (breed) => {
 const filterBreedBD = (breed) => {
     breed = breed.charAt(0).toUpperCase() + breed.slice(1);
     return function(dispatch) {
-        return fetch(`${baseApi}dogs?name=${breed}`)
+        return fetch(`${REACT_APP_BACK}dogs?name=${breed}`)
             .then(rs => {
                 if(!rs.ok) throw rs.statusText+ ' in data base';
                 return rs.json();
@@ -139,7 +139,7 @@ const findAllDogs = () => {
 
                 const allDogs = dataAPI;
 
-                const rs = await fetch(`${baseApi}dogs`);
+                const rs = await fetch(`${REACT_APP_BACK}dogs`);
                 const dataBD = await rs.json();
 
                 if (dataBD.length > 0) {
@@ -161,7 +161,7 @@ const deleteDog = (id) => {
 // Modifica el estado del switch dependiendo si hay temperamentos o no en la BD
 const switchTemperaments = () => {
     return function(dispatch) {
-        return fetch(`${baseApi}temperament/find`)
+        return fetch(`${REACT_APP_BACK}temperament/find`)
             .then(rs => {
                 if (rs.ok) {
                     dispatch({type: SWITCH_TEMPERAMENT, payload: true});
@@ -176,7 +176,7 @@ const switchTemperaments = () => {
 const createBreed = (breed) => {
     breed.name = breed.name.charAt(0).toUpperCase() + breed.name.slice(1);
     return function() {
-        return fetch(`${baseApi}dog`, {
+        return fetch(`${REACT_APP_BACK}dog`, {
             method: 'POST',
             body: JSON.stringify(breed),
             headers: {
@@ -195,7 +195,7 @@ const createBreed = (breed) => {
 // Consulta los temperamentos de la BD
 const findTemperaments = () => {
     return function(dispatch) {
-        return fetch(`${baseApi}temperament`)
+        return fetch(`${REACT_APP_BACK}temperament`)
             .then(rs => rs.json())
             .then(data => {
                 dispatch({type: FIND_TEMPERAMENTS, payload: data});
