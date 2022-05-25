@@ -68,7 +68,7 @@ export default function NavBar() {
     }
 
     const upperCase = (breed) => {
-        return breed.charAt(0).toUpperCase() + breed.slice(1)
+        return breed.charAt(0).toUpperCase() + breed.slice(1);
     }
 
     useEffect(() => {

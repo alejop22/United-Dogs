@@ -72,28 +72,36 @@ export default function CreateBreed() {
 
     // Valida y crea errores en el objeto errores
     const handlerErrors = (input) => {
-
         const auxErrors = {}
 
         if (input.name === '') auxErrors.name = '*';
         else if (!/^[A-Z]+$/i.test(input.name)) auxErrors.name = 'The name field must only have letters';
 
         if (input.minHeight === '') auxErrors.minHeight = '*';
-        else if (!/^[0-9]*(\.?)[ 0-9]+$/.test(input.minHeight) || (input.minHeight * 1) > 50) auxErrors.minHeight = 'Only positive numbers are allowed';
-
-        if (input.maxHeight === '') auxErrors.maxHeight = '*';
-        else if (!/^[0-9]*(\.?)[ 0-9\s]+$/.test(input.maxHeight) || (input.maxHeight * 1) > 100) auxErrors.maxHeight = 'Only positive numbers are allowed';
-
-        if (input.minWeight === '') auxErrors.minWeight = '*';
-        else if (!/^[0-9]*(\.?)[ 0-9\s]+$/.test(input.minWeight) || (input.minWeight * 1) > 50) auxErrors.minWeight = 'Only positive numbers are allowed';
-
-        if (input.maxWeight === '') auxErrors.maxWeight = '*';
-        else if (!/^[0-9]*(\.?)[ 0-9\s]+$/.test(input.maxWeight) || (input.maxWeight * 1) > 100) auxErrors.maxWeight = 'Only positive numbers are allowed';
-
-        if (input.life_span !== '') {
-            if(!/^[0-9]*(\.?)[ 0-9\s]+$/.test(input.life_span) || (input.life_span * 1) > 100) auxErrors.life_span = 'Only positive numbers are allowed';
+        else if (!/^[0-9]*(\.?)[ 0-9]+$/.test(input.minHeight) || (input.minHeight * 1) < 1 || (input.minHeight * 1) > 50) {
+            auxErrors.minHeight = 'Only positive numbers or set range allowed';
         }
 
+        if (input.maxHeight === '') auxErrors.maxHeight = '*';
+        else if (!/^[0-9]*(\.?)[ 0-9\s]+$/.test(input.maxHeight) || (input.maxHeight * 1) > 100 || (input.maxHeight * 1) < 50) {
+            auxErrors.maxHeight = 'Only positive numbers or set range allowed';
+        }
+
+        if (input.minWeight === '') auxErrors.minWeight = '*';
+        else if (!/^[0-9]*(\.?)[ 0-9\s]+$/.test(input.minWeight) || (input.minWeight * 1) < 1 || (input.minWeight * 1) > 50) {
+            auxErrors.minWeight = 'Only positive numbers or set range allowed';
+        }
+
+        if (input.maxWeight === '') auxErrors.maxWeight = '*';
+        else if (!/^[0-9]*(\.?)[ 0-9\s]+$/.test(input.maxWeight) || (input.maxWeight * 1) > 100 || (input.maxWeight * 1) < 50) {
+            auxErrors.maxWeight = 'Only positive numbers or set range allowed';
+        }
+
+        if (input.life_span !== '') {
+            if(!/^[0-9]*(\.?)[ 0-9\s]+$/.test(input.life_span) || (input.life_span * 1) < 1 || (input.life_span * 1) > 50) {
+                auxErrors.life_span = 'Only positive numbers or set range allowed';
+            } 
+        }
         return auxErrors;
     }
 
@@ -113,32 +121,31 @@ export default function CreateBreed() {
                             <label>Min Height</label>
                             { errors.minHeight ? <span style={{color:'red'}}>{errors.minHeight}</span> : null }
                         </div>
-                        <input type="number" name='minHeight' onChange={e => handlerChange(e)} value={input.minHeight} min='0' max='50'/>
+                        <input type="number" name='minHeight' onChange={e => handlerChange(e)} value={input.minHeight} min='1' max='50' placeholder='1 - 50 cm'/>
 
                         <div>
                             <label>Max Height</label>
                             { errors.maxHeight ? <span style={{color:'red'}}>{errors.maxHeight}</span> : null }
                         </div>
-                        <input type="number" name='maxHeight' onChange={e => handlerChange(e)} value={input.maxHeight} min='0' max='50'/>
+                        <input type="number" name='maxHeight' onChange={e => handlerChange(e)} value={input.maxHeight} min='50' max='100' placeholder='50 - 100 cm'/>
 
                         <div>
                             <label>Min Weight</label>
                             { errors.minWeight ? <span style={{color:'red'}}>{errors.minWeight}</span> : null }
                         </div>
-                        <input type="number" name='minWeight' onChange={e => handlerChange(e)} value={input.minWeight} min='0' max='50'/>
+                        <input type="number" name='minWeight' onChange={e => handlerChange(e)} value={input.minWeight} min='1' max='50' placeholder='1 - 50 kg'/>
 
                         <div>
                             <label>Max Weight</label>
                             { errors.maxWeight ? <span style={{color:'red'}}>{errors.maxWeight}</span> : null }
                         </div>
-                        <input type="number" name='maxWeight' onChange={e => handlerChange(e)} value={input.maxWeight} min='0' max='50'/>
+                        <input type="number" name='maxWeight' onChange={e => handlerChange(e)} value={input.maxWeight} min='50' max='100' placeholder='50 - 100 kg'/>
 
                         <div>
                             <label>Life Span</label>
                             { errors.life_span ? <span style={{color:'red'}}>{errors.life_span}</span> : null }
                         </div>
-                        <input type="number" name='life_span' onChange={e => handlerChange(e)} value={input.life_span} min='0' max='50'/>
-                        
+                        <input type="number" name='life_span' onChange={e => handlerChange(e)} value={input.life_span} min='1' max='50' placeholder='1 - 50 years'/>
                     </div>
                     <div className={styles.temperaments_details}>
                         <h2>You can choose the temperaments... 🦴</h2>

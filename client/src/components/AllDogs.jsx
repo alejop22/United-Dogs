@@ -163,6 +163,9 @@ export default function AllDogs() {
                             }
                             else alert('Its already filtered'); 
                         }
+                        if (filterDogs.length === 0) {
+                            alert('name')
+                        }
                         
                     }}>Filter temperament</button>
                     <button onClick={() => {
