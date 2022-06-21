@@ -18,20 +18,6 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.get('/find', async (req,res) => {
-    try {
-        const temperamentos = await Temperamento.findAll();
-
-        if (temperamentos.length === 0) {
-            throw 'La tabla esta vacia';
-        }
-        res.send('La tabla temperamentos esta llena');
-
-    } catch (error) {
-        res.status(404).send(error);
-    }
-});
-
 router.post('/', async (req, res) => {
     const {name} = req.body;
     try {

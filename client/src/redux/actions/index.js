@@ -161,7 +161,7 @@ const deleteDog = (id) => {
 // Modifica el estado del switch dependiendo si hay temperamentos o no en la BD
 const switchTemperaments = () => {
     return function(dispatch) {
-        return fetch(`${REACT_APP_BACK}temperament/find`)
+        return fetch(`${REACT_APP_BACK}temperament`)
             .then(rs => {
                 if (rs.ok) {
                     dispatch({type: SWITCH_TEMPERAMENT, payload: true});

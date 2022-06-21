@@ -51,10 +51,6 @@ describe('Temperamento route', () => {
     it('Deberia retornar 200', () =>
       agent.get('/temperament').expect(200)
     );
-
-    it('Deberia retornar 200', () =>
-      agent.get('/temperament/find').expect(200)
-    );
   });
 });
 
