@@ -15,6 +15,7 @@ function App() {
     <div className="App">
       <NavBar />
       <p>apalacio</p>
+      <p>MiguelT</p>
       <Routes>
         <Route path='/' element={<Main />}/>
         <Route path='/home' element={<AllDogs />}/>
