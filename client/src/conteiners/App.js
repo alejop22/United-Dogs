@@ -14,6 +14,7 @@ function App() {
   return (
     <div className="App">
       <NavBar />
+      <p>MiguelT</p>
       <Routes>
         <Route path='/' element={<Main />}/>
         <Route path='/home' element={<AllDogs />}/>
